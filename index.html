@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillPath-AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>SkillPath AI - Your Career Roadmap</h1>
+
+    <header>
+        <h2>SkillPath</h2>
+
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="#">Assessments</a>
+            <a href="#">Skill Gap</a>
+            <a href="#">Roadmap</a>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+
+            <h1>Welcome back, Arshdeep</h1>
+
+            <p>
+                Track your skills and prepare for your target career.
+            </p>
+
+            <span class="role-badge">
+                Full Stack Developer
+            </span>
+
+        </section>
+
+
+        <!-- Overview Section -->
+        <section class="overview">
+
+            <div class="card">
+                <h3>Overall Score</h3>
+                <p id="overall-score">72%</p>
+            </div>
+
+            <div class="card">
+                <h3>Skills Assessed</h3>
+                <p id="skills-assessed">0 / 4</p>
+            </div>
+
+            <div class="card">
+                <h3>Roadmap Progress</h3>
+                <p>"roadmap-progress">0%</p>
+            </div>
+
+        </section>
+
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+
+
+            <!-- Skill Analysis -->
+            <section class="skill-analysis">
+
+                <div class="card">
+
+                    <h2>Skill Analysis</h2>
+
+
+                    <div class="skill">
+
+                        <div class="skill-info">
+                            <span>JavaScript</span>
+                            <span>80%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-fill javascript"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill">
+
+                        <div class="skill-info">
+                            <span>React</span>
+                            <span>70%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-fill react"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill">
+
+                        <div class="skill-info">
+                            <span>Node.js</span>
+                            <span>45%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-fill node"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill">
+
+                        <div class="skill-info">
+                            <span>SQL</span>
+                            <span>40%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-fill sql"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Student Profile -->
+            <div id="student-profile" class="card">
+
+                <h2>Student Profile</h2>
+
+                <p>
+                    Name :
+                    <span id="student-name"></span>
+                </p>
+
+                <p>
+                    Target Role :
+                    <span id="target-role"></span>
+                </p>
+
+                <p>
+                    Education :
+                    <span id="education"></span>
+                </p>
+
+
+                <div id="skills-content" class="hidden"></div>
+
+
+                <button id="profile-btn">
+                    View Skills
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Skill Assessment -->
+        <section class="assessment card">
+
+            <h2>Skill Assessment</h2>
+
+            <form id="assessment-form">
+
+
+                <label for="javascript-score">
+                    JavaScript
+                </label>
+
+                <input type="number" id="javascript-score" min="0" max="100" placeholder="0-100" required>
+
+
+                <label for="react-score">
+                    React
+                </label>
+
+                <input type="number" id="react-score" min="0" max="100" placeholder="0-100" required>
+
+
+                <label for="node-score">
+                    Node.js
+                </label>
+
+                <input type="number" id="node-score" min="0" max="100" placeholder="0-100" required>
+
+
+                <label for="sql-score">
+                    SQL
+                </label>
+
+                <input type="number" id="sql-score" min="0" max="100" placeholder="0-100" required>
+
+
+                <button type="submit">
+                    Submit Assessment
+                </button>
+
+            </form>
+
+
+            <div id="assessment-result"></div>
+
+        </section>
+
+        <section class="skill-gap card">
+
+            <h2>Skill Gap Analysis</h2>
+
+            <p>Areas that need more preparation for your target role.</p>
+
+            <div id="skill-gap-result"></div>
+
+        </section>
+
+        <section class="roadmap card">
+
+            <h2>Learning Priority</h2>
+
+            <p>Focus on these skills first based on your current gaps.</p>
+
+            <div id="roadmap-result"></div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
