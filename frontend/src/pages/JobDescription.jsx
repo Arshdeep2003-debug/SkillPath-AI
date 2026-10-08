@@ -1,3 +1,4 @@
+import { API_URL } from "../utils/api.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { calculateRoadmapProgress } from "../utils/skillUtils.js";
@@ -19,7 +20,7 @@ function JobDescription() {
                 const token = localStorage.getItem("token");
 
                 const response = await fetch(
-                    "http://localhost:5000/api/job-description/latest",
+                    `${API_URL}/api/job-description/latest`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -67,7 +68,7 @@ function JobDescription() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:5000/api/job-description",
+                `${API_URL}/api/job-description`,
                 {
                     method: "POST",
                     headers: {
@@ -129,7 +130,7 @@ function JobDescription() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `http://localhost:5000/api/job-description/${jobAnalysisId}/roadmap/${encodeURIComponent(skillName)}`,
+                `${API_URL}/api/job-description/${jobAnalysisId}/roadmap/${encodeURIComponent(skillName)}`,
                 {
                     method: "PATCH",
                     headers: {

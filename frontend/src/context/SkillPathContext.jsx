@@ -1,3 +1,5 @@
+import { API_URL } from "../utils/api.js";
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { calculateRoadmapProgress } from "../utils/skillUtils.js";
@@ -42,7 +44,7 @@ export function SkillPathProvider({ children }) {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:5000/api/assessment/latest",
+                `${API_URL}/api/assessment/latest`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -116,7 +118,7 @@ export function SkillPathProvider({ children }) {
             const token = localStorage.getItem("token");
 
             const latestResponse = await fetch(
-                "http://localhost:5000/api/assessment/latest",
+                `${API_URL}/api/assessment/latest`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -158,7 +160,7 @@ export function SkillPathProvider({ children }) {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-            `http://localhost:5000/api/assessment/${currentAssessmentId}/roadmap/${encodeURIComponent(skillName)}`,
+            `${API_URL}/api/assessment/${currentAssessmentId}/roadmap/${encodeURIComponent(skillName)}`,
             {
                 method: "PATCH",
                 headers: {

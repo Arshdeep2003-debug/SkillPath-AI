@@ -1,3 +1,5 @@
+import { API_URL } from "../utils/api.js";
+
 import {
     createContext,
     useContext,
@@ -22,7 +24,7 @@ export function AuthProvider({ children }) {
         async function loadUser() {
             try {
                 const response = await fetch(
-                    "http://localhost:5000/api/auth/me",
+                    `${API_URL}/api/auth/me`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

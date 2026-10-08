@@ -1,3 +1,5 @@
+import { API_URL } from "../utils/api.js";
+
 import { useState } from "react";
 import { student } from "../data.js";
 
@@ -48,7 +50,7 @@ function AssessmentForm({ onSkillGapsCalculated, onAssessmentSummary }) {
             };
 
             const response = await fetch(
-                "http://localhost:5000/api/assessment",
+                `${API_URL}/api/assessment`,
                 {
                     method: "POST",
                     headers: {
