@@ -38,8 +38,8 @@ function JobDescription() {
 
                 const result = await response.json();
                 const data = result.data;
-                setJobAnalysisId(data._id);
 
+                setJobAnalysisId(data._id);
                 setJobDescription(data.jobDescription);
                 setSkills(data.extractedSkills);
                 setRankedSkills(data.rankedSkills);
@@ -75,9 +75,7 @@ function JobDescription() {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`
                     },
-                    body: JSON.stringify({
-                        jobDescription
-                    })
+                    body: JSON.stringify({ jobDescription })
                 }
             );
 
@@ -162,92 +160,252 @@ function JobDescription() {
 
     return (
         <main>
-            <section>
-                <h2>Job Description Analysis</h2>
+            <section className="job-analysis">
+                <header className="job-analysis-header">
+                    <p className="page-eyebrow">CAREER MATCHING</p>
+                    <h1>Job Description Analysis</h1>
+                    <p className="page-description">
+                        Discover the skills employers need, identify your gaps,
+                        and build a focused learning plan for your target role.
+                    </p>
+                </header>
 
-                <textarea
-                    rows="12"
-                    value={jobDescription}
-                    onChange={(event) =>
-                        setJobDescription(event.target.value)
-                    }
-                    placeholder="Paste the job description here..."
-                />
+                <section className="job-input-panel card">
+                    <label htmlFor="job-description-input">
+                        Paste a job description
+                    </label>
 
-                <br />
+                    <p className="job-input-help">
+                        Include the job requirements and preferred skills for
+                        a more useful analysis.
+                    </p>
 
-                <button onClick={handleAnalyze} disabled={loading}>
-                    {loading ? "Analyzing..." : "Analyze Job Description"}
-                </button>
+                    <textarea
+                        id="job-description-input"
+                        className="job-description-input"
+                        rows={9}
+                        value={jobDescription}
+                        onChange={(event) =>
+                            setJobDescription(event.target.value)
+                        }
+                        placeholder="Paste the full job description here..."
+                    />
 
-                {error && (
-                    <div>
-                        <p>{error}</p>
+                    <div className="job-form-footer">
+                        <span className="job-input-count">
+                            {jobDescription.trim()
+                                ? `${jobDescription.trim().length} characters`
+                                : "Your job description stays editable"}
+                        </span>
 
-                        {error.includes("Complete an assessment") && (
-                            <button onClick={() => navigate("/assessment")}>
-                                Go to Assessment
-                            </button>
-                        )}
+                        <button
+                            className="job-analyze-button"
+                            onClick={handleAnalyze}
+                            disabled={loading}
+                        >
+                            {loading ? "Analyzing..." : "Analyze Job Description"}
+                        </button>
                     </div>
-                )}
+
+                    {error && (
+                        <div className="job-error" role="alert">
+                            <p>{error}</p>
+
+                            {error.includes("Complete an assessment") && (
+                                <button
+                                    className="job-secondary-button"
+                                    onClick={() => navigate("/assessment")}
+                                >
+                                    Go to Assessment
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </section>
 
                 {skills.length > 0 && (
-                    <div>
-                        <h3>Required Skills</h3>
+                    <div className="job-results">
+                        <section className="job-required-panel card">
+                            <div className="job-section-heading">
+                                <div>
+                                    <p className="page-eyebrow">JOB REQUIREMENTS</p>
+                                    <h2>Required Skills</h2>
+                                </div>
 
-                        {skills.map((skill) => (
-                            <p key={skill}>{skill}</p>
-                        ))}
-
-                        <h3>Skill Gap Analysis</h3>
-
-                        {rankedSkills.map((skill) => (
-                            <div key={skill.name}>
-                                <h4>{skill.name}</h4>
-
-                                <p>
-                                    Current Score:{" "}
-                                    {skill.score === null ? "Not Assessed" : skill.score}
-                                </p>
-
-                                <p>Required: {skill.required}</p>
-
-                                <p>
-                                    Gap:{" "}
-                                    {skill.gap === null ? "—" : skill.gap}
-                                </p>
-
-                                <p>Status: {skill.status}</p>
-                                <p>Priority: {skill.priority}</p>
-                                <p>{skill.recommendation}</p>
+                                <span className="job-count">
+                                    {skills.length} skills found
+                                </span>
                             </div>
-                        ))}
 
-                        <h3>Job-Specific Roadmap</h3>
-
-                        <p>
-                            Roadmap Progress: {roadmapProgress}%
-                        </p>
-
-                        {roadmap.map((skill) => (
-                            <div key={skill.name}>
-                                <h4>{skill.name}</h4>
-
-                                <p>Gap: {skill.gap === null ? "Not Assessed" : skill.gap}</p>
-                                <p>Priority: {skill.priority}</p>
-                                <p>Status: {skill.status}</p>
-                                <p>{skill.recommendation}</p>
-                                <button
-                                    onClick={() => handleRoadmapStatus(skill.name)}
-                                    disabled={skill.status === "Completed"}
-                                >
-                                    {skill.status === "Not Started" && "Start"}
-                                    {skill.status === "In Progress" && "In Progress"}
-                                    {skill.status === "Completed" && "Completed"}
-                                </button>
+                            <div className="required-skills-list">
+                                {skills.map((skill) => (
+                                    <span className="required-skill-chip" key={skill}>
+                                        {skill}
+                                    </span>
+                                ))}
                             </div>
-                        ))}
+                        </section>
+
+                        <section className="job-section">
+                            <div className="job-section-heading">
+                                <div>
+                                    <p className="page-eyebrow">YOUR CURRENT LEVEL</p>
+                                    <h2>Skill Gap Analysis</h2>
+                                    <p className="page-description">
+                                        Compare your assessed scores with the
+                                        requirements for this job.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="job-skill-grid">
+                                {rankedSkills.map((skill) => (
+                                    <article
+                                        className="job-skill-card card"
+                                        key={skill.name}
+                                    >
+                                        <div className="job-skill-card-header">
+                                            <h3>{skill.name}</h3>
+
+                                            <span
+                                                className={`analysis-status status-${skill.status
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-")}`}
+                                            >
+                                                {skill.status}
+                                            </span>
+                                        </div>
+
+                                        <div className="job-skill-metrics">
+                                            <div>
+                                                <span>Current score</span>
+                                                <strong>
+                                                    {skill.score === null
+                                                        ? "Not assessed"
+                                                        : `${skill.score}%`}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Required</span>
+                                                <strong>{skill.required}%</strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Skill gap</span>
+                                                <strong>
+                                                    {skill.gap === null
+                                                        ? "—"
+                                                        : skill.gap}
+                                                </strong>
+                                            </div>
+                                        </div>
+
+                                        <div className="job-skill-priority">
+                                            <span>Priority</span>
+                                            <strong
+                                                className={`priority-${skill.priority.toLowerCase()}`}
+                                            >
+                                                {skill.priority}
+                                            </strong>
+                                        </div>
+
+                                        <p className="job-skill-recommendation">
+                                            {skill.recommendation}
+                                        </p>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="job-section job-roadmap-section">
+                            <div className="job-roadmap-header">
+                                <div>
+                                    <p className="page-eyebrow">YOUR NEXT STEPS</p>
+                                    <h2>Job-Specific Roadmap</h2>
+                                    <p className="page-description">
+                                        Work through the recommended skills and
+                                        track your progress.
+                                    </p>
+                                </div>
+
+                                <div className="job-progress-summary">
+                                    <strong>{roadmapProgress}%</strong>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+
+                            <div
+                                className="job-progress-track"
+                                role="progressbar"
+                                aria-label="Job roadmap progress"
+                                aria-valuenow={roadmapProgress}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                            >
+                                <div
+                                    className="job-progress-fill"
+                                    style={{ width: `${roadmapProgress}%` }}
+                                />
+                            </div>
+
+                            <div className="job-roadmap-list">
+                                {roadmap.map((skill) => (
+                                    <article
+                                        className="job-roadmap-card card"
+                                        key={skill.name}
+                                    >
+                                        <div className="job-roadmap-card-header">
+                                            <div>
+                                                <h3>{skill.name}</h3>
+                                                <p>
+                                                    Gap:{" "}
+                                                    {skill.gap === null
+                                                        ? "Not assessed"
+                                                        : skill.gap}
+                                                </p>
+                                            </div>
+
+                                            <span
+                                                className={`roadmap-status status-${skill.status
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-")}`}
+                                            >
+                                                {skill.status}
+                                            </span>
+                                        </div>
+
+                                        <div className="job-skill-priority">
+                                            <span>Priority</span>
+                                            <strong
+                                                className={`priority-${skill.priority.toLowerCase()}`}
+                                            >
+                                                {skill.priority}
+                                            </strong>
+                                        </div>
+
+                                        <p className="job-skill-recommendation">
+                                            {skill.recommendation}
+                                        </p>
+
+                                        <button
+                                            className="roadmap-action"
+                                            onClick={() =>
+                                                handleRoadmapStatus(skill.name)
+                                            }
+                                            disabled={skill.status === "Completed"}
+                                        >
+                                            {skill.status === "Not Started" &&
+                                                "Start learning"}
+                                            {skill.status === "In Progress" &&
+                                                "Mark as completed"}
+                                            {skill.status === "Completed" &&
+                                                "Completed"}
+                                        </button>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
                     </div>
                 )}
             </section>

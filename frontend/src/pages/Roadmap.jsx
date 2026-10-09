@@ -10,10 +10,21 @@ function Roadmap() {
         return (
             <main>
                 <section className="roadmap">
-                    <h2>Roadmap</h2>
-                    <p>
-                        Complete your assessment to generate your roadmap.
-                    </p>
+                    <div className="roadmap-header">
+                        <p className="page-eyebrow">YOUR LEARNING PLAN</p>
+                        <h1>Learning Roadmap</h1>
+                        <p className="page-description">
+                            Your personalized path to career readiness.
+                        </p>
+                    </div>
+
+                    <div className="roadmap-empty card">
+                        <h2>Your roadmap starts here</h2>
+                        <p>
+                            Complete your skill assessment to generate a
+                            personalized learning roadmap.
+                        </p>
+                    </div>
                 </section>
             </main>
         );
@@ -22,27 +33,60 @@ function Roadmap() {
     return (
         <main>
             <section className="roadmap">
-                <h2>Learning Roadmap</h2>
+                <div className="roadmap-header">
+                    <p className="page-eyebrow">YOUR LEARNING PLAN</p>
+                    <h1>Learning Roadmap</h1>
+                    <p className="page-description">
+                        Focus on your biggest skill gaps and track your progress
+                        toward your target career.
+                    </p>
+                </div>
 
-                {roadmapSkills.map((skill) => (
-                    <div className="roadmap-item" key={skill.name}>
-                        <h3>{skill.name}</h3>
+                <div className="roadmap-list">
+                    {roadmapSkills.map((skill) => (
+                        <article className="roadmap-item card" key={skill.name}>
+                            <div className="roadmap-item-header">
+                                <div>
+                                    <h2>{skill.name}</h2>
+                                    <p className="roadmap-gap">
+                                        Skill gap: <strong>{skill.gap}</strong>
+                                    </p>
+                                </div>
 
-                        <p>Gap: {skill.gap}</p>
-                        <p>Priority: {skill.priority}</p>
-                        <p>Status: {skill.status}</p>
-                        <p>{skill.recommendation}</p>
+                                <span
+                                    className={`roadmap-status status-${skill.status
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-")}`}
+                                >
+                                    {skill.status}
+                                </span>
+                            </div>
 
-                        <button
-                            onClick={() => handleRoadmapStatus(skill.name)}
-                            disabled={skill.status === "Completed"}
-                        >
-                            {skill.status === "Not Started" && "Start"}
-                            {skill.status === "In Progress" && "In Progress"}
-                            {skill.status === "Completed" && "Completed"}
-                        </button>
-                    </div>
-                ))}
+                            <div className="roadmap-priority">
+                                <span>Priority</span>
+                                <strong
+                                    className={`priority-${skill.priority.toLowerCase()}`}
+                                >
+                                    {skill.priority}
+                                </strong>
+                            </div>
+
+                            <p className="roadmap-recommendation">
+                                {skill.recommendation}
+                            </p>
+
+                            <button
+                                className="roadmap-action"
+                                onClick={() => handleRoadmapStatus(skill.name)}
+                                disabled={skill.status === "Completed"}
+                            >
+                                {skill.status === "Not Started" && "Start learning"}
+                                {skill.status === "In Progress" && "Mark as completed"}
+                                {skill.status === "Completed" && "Completed"}
+                            </button>
+                        </article>
+                    ))}
+                </div>
             </section>
         </main>
     );

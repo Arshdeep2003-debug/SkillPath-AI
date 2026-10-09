@@ -98,118 +98,160 @@ function AssessmentForm({ onSkillGapsCalculated, onAssessmentSummary }) {
 
 
     return (
-
         <section className="assessment card">
+            <div className="assessment-header">
+                <p className="page-eyebrow">SKILL EVALUATION</p>
+                <h2>Skill Assessment</h2>
+                <p className="page-description">
+                    Rate your current skills from 0 to 100 to identify
+                    your strengths and areas for improvement.
+                </p>
+            </div>
 
-            <h2>Skill Assessment</h2>
+            <form className="assessment-form" onSubmit={handleSubmit}>
+                <div className="assessment-fields">
+                    <div className="assessment-field">
+                        <label htmlFor="javascript-score">JavaScript</label>
+                        <input
+                            id="javascript-score"
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={javascriptScore}
+                            onChange={(event) =>
+                                setJavascriptScore(event.target.value)
+                            }
+                            placeholder="Enter score (0–100)"
+                            required
+                        />
+                    </div>
 
+                    <div className="assessment-field">
+                        <label htmlFor="react-score">React</label>
+                        <input
+                            id="react-score"
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={reactScore}
+                            onChange={(event) =>
+                                setReactScore(event.target.value)
+                            }
+                            placeholder="Enter score (0–100)"
+                            required
+                        />
+                    </div>
 
-            <form onSubmit={handleSubmit}>
+                    <div className="assessment-field">
+                        <label htmlFor="node-score">Node.js</label>
+                        <input
+                            id="node-score"
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={nodeScore}
+                            onChange={(event) =>
+                                setNodeScore(event.target.value)
+                            }
+                            placeholder="Enter score (0–100)"
+                            required
+                        />
+                    </div>
 
-                <label>JavaScript</label>
-
-                <input
-                    type="number"
-                    value={javascriptScore}
-                    onChange={(event) =>
-                        setJavascriptScore(event.target.value)
-                    }
-                    placeholder="0-100"
-                />
-
-
-                <label>React</label>
-
-                <input
-                    type="number"
-                    value={reactScore}
-                    onChange={(event) =>
-                        setReactScore(event.target.value)
-                    }
-                    placeholder="0-100"
-                />
-
-
-                <label>Node.js</label>
-
-                <input
-                    type="number"
-                    value={nodeScore}
-                    onChange={(event) =>
-                        setNodeScore(event.target.value)
-                    }
-                    placeholder="0-100"
-                />
-
-
-                <label>SQL</label>
-
-                <input
-                    type="number"
-                    value={sqlScore}
-                    onChange={(event) =>
-                        setSqlScore(event.target.value)
-                    }
-                    placeholder="0-100"
-                />
+                    <div className="assessment-field">
+                        <label htmlFor="sql-score">SQL</label>
+                        <input
+                            id="sql-score"
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={sqlScore}
+                            onChange={(event) =>
+                                setSqlScore(event.target.value)
+                            }
+                            placeholder="Enter score (0–100)"
+                            required
+                        />
+                    </div>
+                </div>
 
                 {error && (
-                    <p className="error-message">
+                    <p className="assessment-error" role="alert">
                         {error}
                     </p>
                 )}
 
-
-                <button type="submit" disabled={isSubmitting}>
+                <button
+                    className="assessment-submit"
+                    type="submit"
+                    disabled={isSubmitting}
+                >
                     {isSubmitting ? "Submitting..." : "Submit Assessment"}
                 </button>
-
             </form>
-
 
             {assessmentResult !== null && (
                 <div className="assessment-result">
+                    <div className="assessment-result-header">
+                        <div>
+                            <p className="page-eyebrow">ASSESSMENT COMPLETE</p>
+                            <h3>Your Results</h3>
+                        </div>
 
-                    <h3>Assessment Submitted</h3>
+                        <div className="assessment-overall">
+                            <span>Overall score</span>
+                            <strong>{result.overallScore.toFixed(1)}%</strong>
+                        </div>
+                    </div>
 
-                    <p>
-                        Overall Score:{" "}
-                        {result.overallScore.toFixed(1)}%
-                    </p>
+                    <div className="assessment-result-grid">
+                        {[
+                            {
+                                name: "JavaScript",
+                                score: result.assessment.javascript,
+                                status: result.skillAnalysis.javascript.status
+                            },
+                            {
+                                name: "React",
+                                score: result.assessment.react,
+                                status: result.skillAnalysis.react.status
+                            },
+                            {
+                                name: "Node.js",
+                                score: result.assessment.node,
+                                status: result.skillAnalysis.node.status
+                            },
+                            {
+                                name: "SQL",
+                                score: result.assessment.sql,
+                                status: result.skillAnalysis.sql.status
+                            }
+                        ].map((skill) => (
+                            <div
+                                className="assessment-result-item"
+                                key={skill.name}
+                            >
+                                <div className="assessment-result-item-header">
+                                    <span>{skill.name}</span>
+                                    <strong>{skill.score}%</strong>
+                                </div>
 
-                    <p>
-                        JavaScript:{" "}
-                        {result.assessment.javascript}%
-                        {" - "}
-                        {result.skillAnalysis.javascript.status}
-                    </p>
+                                <div className="progress">
+                                    <div
+                                        className="progress-fill"
+                                        style={{ width: `${skill.score}%` }}
+                                    />
+                                </div>
 
-                    <p>
-                        React:{" "}
-                        {result.assessment.react}%
-                        {" - "}
-                        {result.skillAnalysis.react.status}
-                    </p>
-
-                    <p>
-                        Node.js:{" "}
-                        {result.assessment.node}%
-                        {" - "}
-                        {result.skillAnalysis.node.status}
-                    </p>
-
-                    <p>
-                        SQL:{" "}
-                        {result.assessment.sql}%
-                        {" - "}
-                        {result.skillAnalysis.sql.status}
-                    </p>
-
+                                <span className="assessment-skill-status">
+                                    {skill.status}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
-
         </section>
-
     );
 
 }
